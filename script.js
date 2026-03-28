@@ -1,8 +1,8 @@
 const bookCollection = [];
 
-// Constructor to create new books.
+// Constructor to create new books with unique identifiers
 function Book(title, author, pages, hasBeenRead) {
-  // Using UUID to set a unique identifier for each book.
+  // Generate a unique identifier using crypto.randomUUID()
   this.id = crypto.randomUUID();
   this.title = title;
   this.author = author;
@@ -10,67 +10,99 @@ function Book(title, author, pages, hasBeenRead) {
   this.hasBeenRead = hasBeenRead;
 }
 
+// Add new book to collection with validation
 function addBook(title, author, pages, hasBeenRead = false) {
-  // Ensure all required fields are present
+  // Validate required fields
   if (!title || !author) {
     throw new Error("Invalid title or author");
   }
 
+  // Validate page count
   if (pages == null) {
     throw new Error("Invalid value provided for pages");
   }
 
-  // Standardize the page count into a whole number before validation
+  // Convert to integer and validate
   pages = parseInt(pages);
-
-  // Check for realistic page values
   if (!Number.isInteger(pages) || pages <= 0) {
     throw new Error("Please enter a positive whole number for pages.");
   }
 
-  // Ensure 'hasBeenRead' is strictly a boolean to avoid logic errors in the UI
-  if (typeof hasBeenRead !== 'boolean') {
+  // Ensure read status is boolean
+  if (typeof hasBeenRead !== "boolean") {
     throw new Error("Read status must be true or false.");
   }
 
+  // Create and add book to collection
   const book = new Book(title, author, pages, hasBeenRead);
   bookCollection.push(book);
 }
 
+// Display books in the container
 function displayBooks(books) {
   const bookContainer = document.querySelector(".books-container");
-
-  // Reset book container to prevent duplicate content
+  // Clear existing content
   bookContainer.textContent = "";
 
-  // Create and add a new element for each book in 'books' parameter.
+  // Create book cards for each book
   books.forEach((book) => {
-    // Create element to store book card
+    // Create book card container
     const bookCard = document.createElement("div");
     bookCard.classList.add("book-card");
 
-    // Store book details to be created
+    // Create book details
     const bookDetails = [
-      { tag: 'h3', text: `Title: ${book.title}` },
-      { tag: 'p', text: `Author: ${book.author}` },
-      { tag: 'p', text: `Pages: ${book.pages}` },
-      { tag: 'p', text: book.hasBeenRead ? "Status: Read" : "Status: Not read yet" }
+      { tag: "h3", text: `Title: ${book.title}` },
+      { tag: "p", text: `Author: ${book.author}` },
+      { tag: "p", text: `Pages: ${book.pages}` },
+      {
+        tag: "p",
+        text: book.hasBeenRead ? "Status: Read" : "Status: Not read yet",
+      },
     ];
 
-    // Create elements based on the tag and text within bookDetails
-    bookDetails.forEach(detail => {
+    // Add details to card
+    bookDetails.forEach((detail) => {
       const element = document.createElement(detail.tag);
       element.textContent = detail.text;
       bookCard.appendChild(element);
     });
 
-    // Append created card to book container
+    // Add card to container
     bookContainer.appendChild(bookCard);
   });
 }
 
-// Add test book to bookCollection
+// Add test book to collection
 const testBook = new Book("Johns' Book", "John", 117);
 bookCollection.push(testBook);
 
+// Display initial books
 displayBooks(bookCollection);
+
+// Handle form submission
+const newBookModal = document.querySelector("#add-book-modal");
+const newBookForm = document.querySelector("#add-book-form");
+const formFeedbackField = document.querySelector("#form-feedback");
+
+newBookForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const newTitle = e.target.elements["new-book-title"].value;
+  const newAuthor = e.target.elements["new-book-author"].value;
+  const newPages = e.target.elements["new-book-pages"].value;
+  const newReadStatus = e.target.elements["new-book-read-status"].checked;
+
+  try {
+    addBook(newTitle, newAuthor, newPages, newReadStatus);
+    displayBooks(bookCollection);
+    formFeedbackField.textContent = "Book added successfully! Closing form.";
+    
+    setTimeout(() => {
+      newBookModal.close();
+      formFeedbackField.textContent = "";
+      e.target.reset();
+    }, 2000);
+  } catch (error) {
+    formFeedbackField.textContent = `Error adding new book: ${error.message}`;
+  }
+});

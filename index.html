@@ -1,15 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Library</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <h1>John's Library</h1>
-  <h2>Current Books</h2>
-  <div class="books-container"></div>
-  <script src="script.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>John's Library</h1>
+    <h2>Current Books</h2>
+    <!-- Container for new book cards -->
+    <div class="books-container"></div>
+
+    <button command="show-modal" commandfor="add-book-modal">Add Book</button>
+    <!-- Modal for adding new book -->
+    <dialog id="add-book-modal">
+      <h3>Enter book details:</h3>
+      <form id="add-book-form">
+        <p id="form-feedback"></p>
+        <label for="new-book-title">Enter title:</label>
+        <input type="text" name="new-book-title" id="new-book-title" required>
+        <label for="new-book-author">Enter author:</label>
+        <input type="text" name="new-book-author" id="new-book-author" required>
+        <label for="new-book-pages">Enter pages:</label>
+        <input type="number" name="new-book-pages" id="new-book-pages" required >
+        <label for="new-book-read-status">Has been read?:</label>
+        <input type="checkbox" name="new-book-read-status" id="new-book-read-status">
+        
+        <button type="submit">Add</button>
+      </form>
+      <!-- Close modal button -->
+      <button commandfor="add-book-modal" command="close">Close</button>
+    </dialog>
+    <script src="script.js"></script>
+  </body>
 </html>
