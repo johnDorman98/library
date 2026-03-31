@@ -11,6 +11,10 @@ function Book(title, author, pages, hasBeenRead) {
   this.hasBeenRead = hasBeenRead;
 }
 
+Book.prototype.toggleRead = function () {
+  this.hasBeenRead = this.hasBeenRead ? false : true;
+};
+
 // Add new book to collection with validation
 function addBook(title, author, pages, hasBeenRead = false) {
   // Ensuring that only valid data is added to the collection.
@@ -71,20 +75,41 @@ function displayBooks(books) {
     deleteButton.innerText = "Delete";
     deleteButton.type = "button";
     // set data attribute to associate book with a specific book id.
-    // The bookId data attribute will be used when a book is deleted or edited.
+    // The bookId data attribute will be used when a book is deleted.
     deleteButton.dataset.bookId = book.id;
+    deleteButton.dataset.action = "delete";
     bookCard.appendChild(deleteButton);
+
+    const markAsReadButton = document.createElement("button");
+
+    // Display button text based on current read status to indicate the action to be performed.
+    markAsReadButton.innerText = book.hasBeenRead ? "Mark Unread" : "Mark Read";
+    markAsReadButton.type = "button";
+    // Set data attribute to associate book with a specific book id.
+    // The bookId data attribute will be used when toggling a book's read status.
+    markAsReadButton.dataset.bookId = book.id;
+    markAsReadButton.dataset.action = "toggle-read";
+    bookCard.appendChild(markAsReadButton);
 
     bookContainer.appendChild(bookCard);
   });
 }
 
+// Marks book with matching id as read.
+function updateReadStatus(bookId) {
+  let bookToUpdate = booksCollection.find((book) => book.id === bookId);
+
+  bookToUpdate.toggleRead();
+
+  displayBooks(booksCollection);
+}
+
 // Filters bookCollection removing book to be deleted.
 function deleteBook(bookId) {
   // Updates bookCollection by filtering out the book that matches the id of the book to be deleted.
-  booksCollection = booksCollection.filter(book => book.id !== bookId)
+  booksCollection = booksCollection.filter((book) => book.id !== bookId);
 
-  displayBooks(booksCollection)
+  displayBooks(booksCollection);
 }
 
 // Display initial books
@@ -125,13 +150,18 @@ const bookContainer = document.querySelector(".books-container");
 
 // Listening for click on container as a whole for reduced load of listening to an event on each card
 bookContainer.addEventListener("click", (e) => {
-  if (e.target.innerText === "Delete") {
-    const confirmDeletion = window.confirm("Are you sure you want to delete the book?");
+  const selectedBookId = e.target.dataset.bookId;
+  const buttonAction = e.target.dataset.action;
+
+  if (buttonAction === "delete") {
+    const confirmDeletion = window.confirm(
+      "Are you sure you want to delete the book?",
+    );
 
     if (confirmDeletion) {
-      const selectedBookId = e.target.dataset.bookId
-
-      deleteBook(selectedBookId)
+      deleteBook(selectedBookId);
     }
+  } else if (buttonAction === "toggle-read") {
+    updateReadStatus(selectedBookId);
   }
-})
+});
