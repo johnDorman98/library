@@ -39,5 +39,35 @@ select {
 /* Base styles */
 
 body {
-  background-color: #f0f0f0;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  max-width: 80vw;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+:root {
+  --bg-main: #1a0633;
+  --bg-card: #2d0b5a;
+  --text-main: #f0f0f0;
+  --text-muted: #b080b0;
+  --clr-accent: #00f3ff;
+  --clr-danger: #ff00ff;
+}
+
+.main-title {
+  color: var(--clr-accent);
+}
+
+.books-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.book-card {
+  background-color: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 0 5px var(--clr-accent);
 }

@@ -1,6 +1,16 @@
 // Single source of truth for current book objects
 let booksCollection = [];
 
+// Add 4 example books to the collection
+try {
+    addBook("The Great Gatsby", "F. Scott Fitzgerald", 180, true);
+    addBook("To Kill a Mockingbird", "Harper Lee", 281, true);
+    addBook("1984", "George Orwell", 328, false);
+    addBook("Pride and Prejudice", "Jane Austen", 432, false);
+} catch (error) {
+    console.error("Error adding example books:", error.message);
+}
+
 // Constructor to create new books with unique identifiers
 function Book(title, author, pages, hasBeenRead) {
   // Generate a unique identifier using crypto.randomUUID()
