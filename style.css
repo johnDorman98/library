@@ -195,6 +195,12 @@ dialog::backdrop {
   font-size: 0.9rem;
 }
 
+#form-feedback {
+  text-align: left;
+  color: var(--clr-danger);
+  font-size: 0.9rem;
+}
+
 #add-book-form input[type="text"],
 #add-book-form input[type="number"] {
   background-color: var(--bg-main);
