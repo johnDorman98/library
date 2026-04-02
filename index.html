@@ -8,7 +8,7 @@
   </head>
   <body>
     <h1 class="main-title">John's Library</h1>
-    <button command="show-modal" commandfor="add-book-modal">Add Book</button>
+    <button class="btn-primary" command="show-modal" commandfor="add-book-modal">Add Book</button>
     <h2>Current Books</h2>
     <!-- Container for new book cards -->
     <div class="books-container"></div>
@@ -19,18 +19,34 @@
       <form id="add-book-form">
         <p id="form-feedback"></p>
         <label for="new-book-title">Enter title:</label>
-        <input type="text" name="new-book-title" id="new-book-title" required>
+        <input type="text" name="new-book-title" id="new-book-title" required />
         <label for="new-book-author">Enter author:</label>
-        <input type="text" name="new-book-author" id="new-book-author" required>
+        <input
+          type="text"
+          name="new-book-author"
+          id="new-book-author"
+          required
+        />
         <label for="new-book-pages">Enter pages:</label>
-        <input type="number" name="new-book-pages" id="new-book-pages" required >
-        <label for="new-book-read-status">Has been read?:</label>
-        <input type="checkbox" name="new-book-read-status" id="new-book-read-status">
-        
-        <button type="submit">Add</button>
+        <input
+          type="number"
+          name="new-book-pages"
+          id="new-book-pages"
+          required
+        />
+        <div class="checkbox-group">
+          <label for="new-book-read-status">Has been read?:</label>
+          <input
+            type="checkbox"
+            name="new-book-read-status"
+            id="new-book-read-status"
+          />
+        </div>
+
+        <button class="btn-primary" type="submit">Add</button>
       </form>
       <!-- Close modal button -->
-      <button commandfor="add-book-modal" command="close">Close</button>
+      <button class="btn-secondary" commandfor="add-book-modal" command="close">Close</button>
     </dialog>
     <script src="script.js"></script>
   </body>
