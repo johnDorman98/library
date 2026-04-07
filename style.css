@@ -241,6 +241,10 @@ dialog::backdrop {
   width: 100%;
 }
 
+#add-book-form input:focus-visible {
+  outline: 1px solid var(--text-main);
+}
+
 /* Invalid form input styling */
 .input-wrapper:has(input:user-invalid)::after {
   content: "X";
@@ -256,15 +260,24 @@ dialog::backdrop {
 }
 
 
-#add-book-form input[type="text"]:user-invalid,
-#add-book-form input[type="number"]:user-invalid {
+#add-book-form input:user-invalid {
   border-color: var(--clr-danger);
   box-shadow: 0 0 5px var(--clr-danger);
 }
 
+#add-book-form input:user-invalid:focus-visible {
+  outline: 1px solid var(--clr-danger);
+  outline-offset: 2px;
+}
+
+
 /* Valid form input styling */
-#add-book-form input[type="text"]:user-valid,
-#add-book-form input[type="number"]:user-valid {
+#add-book-form input:user-valid {
   border-color: var(--clr-accent);
   box-shadow: 0 0 5px var(--clr-accent);
+}
+
+#add-book-form input:user-valid:focus-visible {
+  outline: 1px solid var(--clr-accent);
+  outline-offset: 2px;
 }
