@@ -206,6 +206,7 @@ dialog::backdrop {
   background-color: var(--bg-main);
   color: var(--text-main);
   padding: 0.5rem;
+  padding-right: 2.5rem;
   border: 1px solid var(--text-muted);
   border-radius: 4px;
 }
@@ -222,4 +223,48 @@ dialog::backdrop {
   accent-color: var(--clr-accent);
   transform: scale(1.5);
   cursor: pointer;
+}
+
+/* Input group styling */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input-wrapper input {
+  width: 100%;
+}
+
+/* Invalid form input styling */
+.input-wrapper:has(input:user-invalid)::after {
+  content: "X";
+  color: var(--clr-danger);
+  font-weight: bold;
+  font-size: 120%;
+  pointer-events: none;
+  margin-left: 0.5rem;
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%)
+}
+
+
+#add-book-form input[type="text"]:user-invalid,
+#add-book-form input[type="number"]:user-invalid {
+  border-color: var(--clr-danger);
+  box-shadow: 0 0 5px var(--clr-danger);
+}
+
+/* Valid form input styling */
+#add-book-form input[type="text"]:user-valid,
+#add-book-form input[type="number"]:user-valid {
+  border-color: var(--clr-accent);
+  box-shadow: 0 0 5px var(--clr-accent);
 }

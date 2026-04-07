@@ -8,7 +8,13 @@
   </head>
   <body>
     <h1 class="main-title">John's Library</h1>
-    <button class="btn-primary" command="show-modal" commandfor="add-book-modal">Add Book</button>
+    <button
+      class="btn-primary"
+      command="show-modal"
+      commandfor="add-book-modal"
+    >
+      Add Book
+    </button>
     <h2>Current Books</h2>
     <!-- Container for new book cards -->
     <div class="books-container"></div>
@@ -18,23 +24,36 @@
       <h3>Enter book details:</h3>
       <form id="add-book-form">
         <p id="form-feedback"></p>
-        <label for="new-book-title">Enter title:</label>
-        <input type="text" name="new-book-title" id="new-book-title" required />
-        <label for="new-book-author">Enter author:</label>
-        <input
-          type="text"
-          name="new-book-author"
-          id="new-book-author"
-          required
-        />
-        <label for="new-book-pages">Enter pages:</label>
-        <input
-          type="number"
-          name="new-book-pages"
-          id="new-book-pages"
-          min="0"
-          required
-        />
+        <div class="input-group">
+          <label for="new-book-title">Enter title:</label>
+          <div class="input-wrapper">
+            <input
+              type="text"
+              name="new-book-title"
+              id="new-book-title"
+              required
+            />
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="new-book-author">Enter author:</label>
+          <input
+            type="text"
+            name="new-book-author"
+            id="new-book-author"
+            required
+          />
+        </div>
+        <div class="input-group">
+          <label for="new-book-pages">Enter pages:</label>
+          <input
+            type="number"
+            name="new-book-pages"
+            id="new-book-pages"
+            min="0"
+            required
+          />
+        </div>
         <div class="checkbox-group">
           <label for="new-book-read-status">Has been read?:</label>
           <input
@@ -47,7 +66,9 @@
         <button class="btn-primary" type="submit">Add</button>
       </form>
       <!-- Close modal button -->
-      <button class="btn-secondary" commandfor="add-book-modal" command="close">Close</button>
+      <button class="btn-secondary" commandfor="add-book-modal" command="close">
+        Close
+      </button>
     </dialog>
     <script src="script.js"></script>
   </body>
