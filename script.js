@@ -156,6 +156,12 @@ newBookForm.addEventListener("submit", (e) => {
   }
 });
 
+// Reset form when modal is closed.
+newBookModal.addEventListener("close", (e) => {
+  formFeedbackField.textContent = "";
+  newBookForm.reset();
+})
+
 const bookContainer = document.querySelector(".books-container");
 
 // Listening for click on container as a whole for reduced load of listening to an event on each card
