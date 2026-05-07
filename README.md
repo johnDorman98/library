@@ -19,6 +19,14 @@ The application features a dark theme with neon accents, form validation with vi
 - **Modern HTML Dialog**: Uses the native `<dialog>` element with `command` and `commandfor` attributes for modal functionality
 - **Example Books**: Pre-populated with four classic books to demonstrate functionality
 
+## Live Demo
+
+Access the live deployed webpage via GitHub Pages:
+
+```
+https://johndorman98.github.io/library
+```
+
 ## Installation
 
 1. Clone the repository:
@@ -28,11 +36,10 @@ The application features a dark theme with neon accents, form validation with vi
    cd library
    ```
 
-2. No build tools or dependencies required! This is a pure vanilla JavaScript project.
-
-3. Open `index.html` in your web browser:
+2. Open `index.html` in your web browser:
    - Double-click the `index.html` file, or
    - Use a local development server (recommended):
+
      ```bash
      # Using Python
      python -m http.server 8000
@@ -40,6 +47,7 @@ The application features a dark theme with neon accents, form validation with vi
      # Using Node.js http-server (if installed)
      npx http-server
      ```
+
      Then navigate to `http://localhost:8000`
 
 ## Usage
