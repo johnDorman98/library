@@ -64,7 +64,7 @@ body {
 
 .books-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1rem;
 }
 
@@ -263,11 +263,11 @@ dialog::backdrop {
 #add-book-form input:user-invalid {
   border-color: var(--clr-danger);
   box-shadow: 0 0 5px var(--clr-danger);
+  transition: 0.5s;
 }
 
 #add-book-form input:user-invalid:focus-visible {
-  outline: 1px solid var(--clr-danger);
-  outline-offset: 2px;
+  outline: 2px solid var(--clr-danger);
 }
 
 
@@ -275,9 +275,9 @@ dialog::backdrop {
 #add-book-form input:user-valid {
   border-color: var(--clr-accent);
   box-shadow: 0 0 5px var(--clr-accent);
+  transition: 0.5s;
 }
 
 #add-book-form input:user-valid:focus-visible {
-  outline: 1px solid var(--clr-accent);
-  outline-offset: 2px;
+  outline: 2px solid var(--clr-accent);
 }
