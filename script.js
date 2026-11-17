@@ -3,12 +3,12 @@ let booksCollection = [];
 
 // Add 4 example books to the collection
 try {
-    addBook("The Great Gatsby", "F. Scott Fitzgerald", 180, true);
-    addBook("To Kill a Mockingbird", "Harper Lee", 281, true);
-    addBook("1984", "George Orwell", 328, false);
-    addBook("Pride and Prejudice", "Jane Austen", 432, false);
+  addBook("The Great Gatsby", "F. Scott Fitzgerald", 180, true);
+  addBook("To Kill a Mockingbird", "Harper Lee", 281, true);
+  addBook("1984", "George Orwell", 328, false);
+  addBook("Pride and Prejudice", "Jane Austen", 432, false);
 } catch (error) {
-    console.error("Error adding example books:", error.message);
+  console.error("Error adding example books:", error.message);
 }
 
 // Constructor to create new books with unique identifiers
@@ -129,6 +129,8 @@ displayBooks(booksCollection);
 const newBookModal = document.querySelector("#add-book-modal");
 const newBookForm = document.querySelector("#add-book-form");
 const formFeedbackField = document.querySelector("#form-feedback");
+const submitButton = document.querySelector("#new-book-submit-button");
+let modalTimeoutId = null;
 
 newBookForm.addEventListener("submit", (e) => {
   // Prevent the default behavior of refreshing a page when the form is submitted.
@@ -137,18 +139,18 @@ newBookForm.addEventListener("submit", (e) => {
   const newAuthor = e.target.elements["new-book-author"].value;
   const newPages = e.target.elements["new-book-pages"].value;
   const newReadStatus = e.target.elements["new-book-read-status"].checked;
+  
 
   try {
     // Update bookCollection and display upon valid book values.
     addBook(newTitle, newAuthor, newPages, newReadStatus);
+    submitButton.disabled = true;
     displayBooks(booksCollection);
     formFeedbackField.textContent = "Book added successfully! Closing form.";
 
     // Close and reset modal with delay to allow the user time to read the success message.
-    setTimeout(() => {
-      newBookModal.close();
-      formFeedbackField.textContent = "";
-      e.target.reset();
+    modalTimeoutId = setTimeout(() => {
+      newBookModal.close();     
     }, 2000);
   } catch (error) {
     // Update modal with message to alert user of error.
@@ -158,9 +160,14 @@ newBookForm.addEventListener("submit", (e) => {
 
 // Reset form when modal is closed.
 newBookModal.addEventListener("close", (e) => {
+  if (modalTimeoutId) {
+    clearTimeout(modalTimeoutId)
+    modalTimeoutId = null;
+  }
   formFeedbackField.textContent = "";
   newBookForm.reset();
-})
+  submitButton.disabled = false;
+});
 
 const bookContainer = document.querySelector(".books-container");
 
