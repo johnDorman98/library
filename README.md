@@ -75,7 +75,8 @@ https://johndorman98.github.io/library
   - CSS transitions for interactive elements
   - `interpolate-size` for smooth dialog animations
 - **JavaScript (ES6+)**:
-  - Constructor functions and prototypes
+  - ES6 classes
+  - JSDoc
   - `crypto.randomUUID()` for unique identifiers
   - Event delegation for efficient event handling
   - Array methods (`forEach`, `filter`, `find`)
