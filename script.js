@@ -1,3 +1,18 @@
+class Book {
+  constructor(title, author, pages, hasBeenRead) {
+    // Generate a unique identifier using crypto.randomUUID()
+    this.id = crypto.randomUUID();
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.hasBeenRead = hasBeenRead;
+  }
+
+  toggleRead() {
+    this.hasBeenRead = this.hasBeenRead ? false : true;
+  }
+}
+
 // Single source of truth for current book objects
 let booksCollection = [];
 
@@ -10,20 +25,6 @@ try {
 } catch (error) {
   console.error("Error adding example books:", error.message);
 }
-
-// Constructor to create new books with unique identifiers
-function Book(title, author, pages, hasBeenRead) {
-  // Generate a unique identifier using crypto.randomUUID()
-  this.id = crypto.randomUUID();
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.hasBeenRead = hasBeenRead;
-}
-
-Book.prototype.toggleRead = function () {
-  this.hasBeenRead = this.hasBeenRead ? false : true;
-};
 
 // Add new book to collection with validation
 function addBook(title, author, pages, hasBeenRead = false) {
@@ -139,7 +140,6 @@ newBookForm.addEventListener("submit", (e) => {
   const newAuthor = e.target.elements["new-book-author"].value;
   const newPages = e.target.elements["new-book-pages"].value;
   const newReadStatus = e.target.elements["new-book-read-status"].checked;
-  
 
   try {
     // Update bookCollection and display upon valid book values.
@@ -150,7 +150,7 @@ newBookForm.addEventListener("submit", (e) => {
 
     // Close and reset modal with delay to allow the user time to read the success message.
     modalTimeoutId = setTimeout(() => {
-      newBookModal.close();     
+      newBookModal.close();
     }, 2000);
   } catch (error) {
     // Update modal with message to alert user of error.
@@ -161,7 +161,7 @@ newBookForm.addEventListener("submit", (e) => {
 // Reset form when modal is closed.
 newBookModal.addEventListener("close", (e) => {
   if (modalTimeoutId) {
-    clearTimeout(modalTimeoutId)
+    clearTimeout(modalTimeoutId);
     modalTimeoutId = null;
   }
   formFeedbackField.textContent = "";
