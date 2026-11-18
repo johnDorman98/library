@@ -1,4 +1,13 @@
+/**
+ * Represents a single book object.
+ */
 class Book {
+  /**
+   * @param {string} title - the book's title
+   * @param {string} author - the book's author
+   * @param {number} pages - the number of pages in the book
+   * @param {boolean} hasBeenRead - the read status of the book
+   */
   constructor(title, author, pages, hasBeenRead) {
     // Generate a unique identifier using crypto.randomUUID()
     this.id = crypto.randomUUID();
@@ -8,12 +17,19 @@ class Book {
     this.hasBeenRead = hasBeenRead;
   }
 
+  /**
+   * Responsible for updating the hasBeenRead status between true and false
+   * @returns {void}
+   */
   toggleRead() {
     this.hasBeenRead = this.hasBeenRead ? false : true;
   }
 }
 
-// Single source of truth for current book objects
+/**
+ * Store book objects to be manipulated in memory.
+ * @type {Book[]}
+ */
 let booksCollection = [];
 
 // Add 4 example books to the collection
@@ -26,7 +42,15 @@ try {
   console.error("Error adding example books:", error.message);
 }
 
-// Add new book to collection with validation
+/**
+ * Responsible for validating the new book details and creating a new Book object and pushes it to the booksCollection array.
+ * @param {string} title - the title for the new book
+ * @param {string} author - the author for the new book
+ * @param {number} pages - the number of pages for the new book
+ * @param {boolean} [hasBeenRead=false] - the read status for the new book
+ * @returns {void}
+ * @throws {Error} - validation errors thrown for invalid parameters
+ */
 function addBook(title, author, pages, hasBeenRead = false) {
   // Ensuring that only valid data is added to the collection.
   if (!title || !author) {
@@ -51,7 +75,11 @@ function addBook(title, author, pages, hasBeenRead = false) {
   booksCollection.push(book);
 }
 
-// Display books in the container
+/**
+ * Responsible for displaying books in the container by creating book cards for each book.
+ * @param {Book[]} books - the collection of books to display
+ * @returns {void}
+ */
 function displayBooks(books) {
   const bookContainer = document.querySelector(".books-container");
   // Prevent duplicate books being displayed
@@ -106,17 +134,38 @@ function displayBooks(books) {
   });
 }
 
-// Marks book with matching id as read.
+/**
+ * Toggles the read status of the book with matching id.
+ * @param {string} bookId - the id of the book to update
+ * @returns {void}
+ * @throws {Error} - thrown when no book matches the provided id
+ */
 function updateReadStatus(bookId) {
   let bookToUpdate = booksCollection.find((book) => book.id === bookId);
+
+  if (!bookToUpdate) {
+    throw new Error("Book not found");
+  }
 
   bookToUpdate.toggleRead();
 
   displayBooks(booksCollection);
 }
 
-// Filters bookCollection removing book to be deleted.
+/**
+ * Filters bookCollection removing book to be deleted.
+ * @param {string} bookId - the id of the book to delete
+ * @returns {void}
+ * @throws {Error} - thrown when no book matches the provided id
+ */
 function deleteBook(bookId) {
+  // Confirm the book exists before attempting to delete it.
+  const bookExists = booksCollection.some((book) => book.id === bookId);
+
+  if (!bookExists) {
+    throw new Error("Book not found");
+  }
+
   // Updates bookCollection by filtering out the book that matches the id of the book to be deleted.
   booksCollection = booksCollection.filter((book) => book.id !== bookId);
 
@@ -126,13 +175,37 @@ function deleteBook(bookId) {
 // Display initial books
 displayBooks(booksCollection);
 
-// Handle form submission
+/**
+ * The modal element for adding a new book.
+ * @type {HTMLDialogElement}
+ */
 const newBookModal = document.querySelector("#add-book-modal");
+
+/**
+ * The form element for adding a new book.
+ * @type {HTMLFormElement}
+ */
 const newBookForm = document.querySelector("#add-book-form");
+
+/**
+ * The feedback field element for displaying form messages.
+ * @type {HTMLElement}
+ */
 const formFeedbackField = document.querySelector("#form-feedback");
+
+/**
+ * The submit button element for the new book form.
+ * @type {HTMLButtonElement}
+ */
 const submitButton = document.querySelector("#new-book-submit-button");
+
+/**
+ * The timeout id for closing the modal after a delay.
+ * @type {number|null}
+ */
 let modalTimeoutId = null;
 
+// Handles new book form submission, adding a new book to the collection
 newBookForm.addEventListener("submit", (e) => {
   // Prevent the default behavior of refreshing a page when the form is submitted.
   e.preventDefault();
@@ -169,9 +242,13 @@ newBookModal.addEventListener("close", (e) => {
   submitButton.disabled = false;
 });
 
+/**
+ * The container element for displaying books.
+ * @type {HTMLElement}
+ */
 const bookContainer = document.querySelector(".books-container");
 
-// Listening for click on container as a whole for reduced load of listening to an event on each card
+// Use event delegation on the container, handling clicks on all book cards efficiently without attaching separate listeners to each one
 bookContainer.addEventListener("click", (e) => {
   const selectedBookId = e.target.dataset.bookId;
   const buttonAction = e.target.dataset.action;
